@@ -91,13 +91,17 @@ app.get('/toptracks', (req, res) => {
         .catch(err => console.error(err));
 });
 
-// app.get('/toptracks', (req, res) => {
-//     getTopTracks(access_token, req.query.term, req.query.limit)
-//         .then(data => {
-//             res.json(data);
-//         })
-//         .catch(err => console.log(err));
-// });
+app.get('/topartists', (req, res) => {
+    const options = {
+        time_range: req.query.term,
+        limit: req.query.limit
+    }
+    spotifyApi.getMyTopArtists(options)
+        .then(data => {
+            res.json(data.body.items);
+        })
+        .catch(err => console.error(err));
+});
 
 app.set('port', process.env.PORT || 5000);
 

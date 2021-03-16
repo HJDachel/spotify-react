@@ -50,7 +50,7 @@ export default class TopTracks extends Component {
         return (
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                 <DropdownToggle caret>
-                    Dropdown
+                    Time Period
                 </DropdownToggle>
                 <DropdownMenu>
                     <DropdownItem header>Top Tracks Term</DropdownItem>
