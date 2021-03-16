@@ -1,0 +1,12 @@
+version: '3'
+services: 
+  client:
+    image: hjdachel/spotifyreactclient
+    ports:
+      - '80:80'
+    depends_on: 
+      - api
+  api:
+    image: hjdachel/spotifyreactapi
+    ports:
+      - '5000:5000'

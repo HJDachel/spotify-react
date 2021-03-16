@@ -7,8 +7,7 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const getRecentlyPlayed = require('./getRecentlyPlayed');
 const credentials = require('./credentials');
 
-const clientUrl = process.env.CLIENT_URL;
-
+const clientUrl = process.env.NODE_ENV == "production" ? process.env.PROD_URL : process.env.CLIENT_URL;
 const app = express();
 
 const spotifyApi = new SpotifyWebApi({
