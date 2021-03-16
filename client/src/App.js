@@ -20,47 +20,56 @@ class App extends Component {
     const { isUserAuthorized } = this.state;
 
     if (isUserAuthorized) {
-      fetch('http://localhost:5000/history')
-        .then(res => res.json())
-        .then(data => {
-          this.setState({
-            musicHistory: data,
-          });
-        })
-        .catch(error => console.log(error));
-
-        fetch('http://localhost:5000/toptracks')
-        .then(res => res.json())
-        .then(data => {
-          this.setState({
-            topTracksData: data,
-          });
-        })
-        .catch(error => console.log(error));
+      this.getRecentlyPlayed();
+      this.getTopTracks("long_term", 25);
     }
   }
 
   render() {
-    const { isUserAuthorized, musicHistory, topTracksData } = this.state;
+    const { isUserAuthorized, musicHistory, topTracks } = this.state;
     const connectSpotify = isUserAuthorized ? (
       ''
     ) : (
-        <a href="http://localhost:5000/login">Connect your Spotify account</a>
-      );
+      <a href="http://localhost:5000/login">Connect your Spotify account</a>
+    );
 
     return (
       <div className="App">
         <header className="header">
-          <h1>Spotify Listening History</h1>
+          <h1>Spotify React App</h1>
           <p>View your music history in realtime with Spotify</p>
 
           {connectSpotify}
           {musicHistory.length !== 0 ? <RecentTracks musicHistory={this.state.musicHistory} /> : null}
-          {topTracksData !== null ? <TopTracks topTracks={this.state.topTracks} /> : null}
+          {topTracks.length !== 0 ? <TopTracks topTracks={this.state.topTracks} refreshTopTracks={this.getTopTracks} /> : null}
         </header>
       </div>
     );
   }
+
+  getTopTracks = (term="short_term", limit=10) => {
+    fetch(`http://localhost:5000/toptracks?term=${term}&limit=${limit}`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          topTracks: data,
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  getRecentlyPlayed = () => {
+    fetch('http://localhost:5000/history')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          musicHistory: data,
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+
 }
 
 export default App;
