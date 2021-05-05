@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Table } from 'reactstrap';
 import '../App.css';
 
 export default class TopTracks extends Component {
@@ -34,7 +34,7 @@ export default class TopTracks extends Component {
     topTracks = () => (
         <div className="top-tracks">
             <h2>Top Tracks</h2> {this.termDropDown()}
-            <table className="table">
+            <Table className='table-dark'>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -42,7 +42,7 @@ export default class TopTracks extends Component {
                     </tr>
                 </thead>
                 <tbody>{this.props.topTracks.map((e, index) => this.tableItem(e, index))}</tbody>
-            </table>
+            </Table>
         </div>
     );
 

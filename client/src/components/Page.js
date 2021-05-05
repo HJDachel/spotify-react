@@ -36,8 +36,16 @@ const Page = (props) => {
                         Top Artists
                     </NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === '4' })}
+                        onClick={() => { toggle('4'); }}
+                    >
+                        Artist Graph
+                    </NavLink>
+                </NavItem>
             </Nav>
-            <TabContent activeTab={activeTab}>
+            <TabContent  activeTab={activeTab}>
                 <TabPane tabId="1">
                     <Row>
                         <Col>
@@ -56,6 +64,13 @@ const Page = (props) => {
                     <Row>
                         <Col>
                             {props.tabs[2]}
+                        </Col>
+                    </Row>
+                </TabPane>
+                <TabPane tabId="4">
+                    <Row>
+                        <Col>
+                            {props.tabs[3]}
                         </Col>
                     </Row>
                 </TabPane>

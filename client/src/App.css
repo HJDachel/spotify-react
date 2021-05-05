@@ -23,3 +23,12 @@ th:first-child, td:first-child {
 th:last-child, td:last-child {
   padding-right: 0;
 }
+
+.dark {
+  color: white;
+  background-color: #1a202c;
+}
+
+.body {
+  color: white;
+}

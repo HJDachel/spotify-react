@@ -102,6 +102,27 @@ app.get('/topartists', (req, res) => {
         .catch(err => console.error(err));
 });
 
+app.get('/searchartists', (req, res) => {
+    const options = {
+        limit: req.query.limit
+    };
+    const searchTerm = req.query.term;
+    spotifyApi.searchArtists(searchTerm, options)
+        .then(data => {
+            res.json(data.body.artists);
+        })
+        .catch(err => console.error(err));
+});
+
+app.get('/relatedartists', (req, res) => {
+    const artistID = req.query.id;
+    spotifyApi.getArtistRelatedArtists(artistID)
+        .then(data => {
+            res.json(data.body.artists);
+        })
+        .catch(err => console.error(err));
+});
+
 app.set('port', process.env.PORT || 5000);
 
 const server = app.listen(app.get('port'), () => {

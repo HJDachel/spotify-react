@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Table } from 'reactstrap';
 import '../App.css';
 
 export default class RecentTracks extends Component {
@@ -13,7 +14,7 @@ export default class RecentTracks extends Component {
     RecentlyPlayed = () => (
         <div className="recently-played">
             <h2>Recent Tracks</h2>
-            <table className="table">
+            <Table className='table-dark'>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -21,7 +22,7 @@ export default class RecentTracks extends Component {
                     </tr>
                 </thead>
                 <tbody>{this.props.musicHistory.map((e, index) => this.TableItem(e, index))}</tbody>
-            </table>
+            </Table>
         </div>
     );
 

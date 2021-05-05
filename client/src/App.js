@@ -4,6 +4,7 @@ import RecentTracks from './components/RecentTracks';
 import TopTracks from './components/TopTracks';
 import Page from './components/Page';
 import TopArtists from './components/TopArtists';
+import ArtistSearch from './components/ArtistSearch'
 
 class App extends Component {
   constructor() {
@@ -15,8 +16,11 @@ class App extends Component {
       isUserAuthorized,
       musicHistory: [],
       topTracks: [],
-      topArtists: []
+      topArtists: [],
+      artistSearchResults: []
     };
+
+    this.clearSearchResults = this.clearSearchResults.bind(this);
   }
 
   componentDidMount() {
@@ -39,8 +43,11 @@ class App extends Component {
     const top_tracks = topTracks.length !== 0 ? <TopTracks topTracks={this.state.topTracks} refreshTopTracks={this.getTopTracks} /> : null;
     const recently_played = musicHistory.length !== 0 ? <RecentTracks musicHistory={this.state.musicHistory} /> : null;
     const top_artists = topArtists.length !== 0 ? <TopArtists topArtists={this.state.topArtists} refreshTopArtists={this.getTopArtists}></TopArtists> : null;
+    const artist_graph = <ArtistSearch artistSearchResults={this.state.artistSearchResults} 
+      searchArtists={this.searchArtists}
+      clearSearchResults={this.clearSearchResults}/>
 
-    const tabs = [top_tracks, recently_played, top_artists];
+    const tabs = [top_tracks, recently_played, top_artists, artist_graph];
     return (
       <div className="App">
         <header className="header">
@@ -49,10 +56,14 @@ class App extends Component {
 
           {connectSpotify}
         </header>
-        {isUserAuthorized == true
+        {isUserAuthorized === true
           ? <Page tabs={tabs}></Page> : null}
       </div>
     );
+  }
+
+  clearSearchResults() {
+    this.setState({artistSearchResults: []});
   }
 
   getTopTracks = (term = "short_term", limit = 10) => {
@@ -86,6 +97,28 @@ class App extends Component {
         });
       })
       .catch(error => console.log(error));
+  }
+
+  searchArtists = (term, limit = 25) => {
+    if (term.length !== 0) {
+      fetch(`http://localhost:5000/searchartists?term=${term}&limit=${limit}`)
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            artistSearchResults: data
+          });
+        })
+        .catch(error => console.error(error))
+    }
+  }
+
+  getRelatedArtists = (id) => {
+    fetch(`http://localhost:5000/relatedartists?id=${id}`)
+      .then(res => res.json())
+      .then(data => {
+        return data;
+      })
+      .catch(error => console.error(error));
   }
 
 

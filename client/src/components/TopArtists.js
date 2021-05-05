@@ -32,7 +32,7 @@ export default class TopArtists extends Component {
     topArtists = () => (
         <div >
             <h2>Top Artists</h2> {this.termDropDown()}
-            <Table>
+            <Table className='table-dark'>
                 <thead>
                     <tr>
                         <th>#</th>
