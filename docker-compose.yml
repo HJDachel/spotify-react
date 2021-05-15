@@ -1,12 +1,12 @@
 version: '3'
 services: 
   client:
-    image: hjdachel/spotifyreactclient
+    image: spotifyreact.azurecr.io/spotifyreactclient:v1
     ports:
       - '80:80'
     depends_on: 
       - api
   api:
-    image: hjdachel/spotifyreactapi
+    image: spotifyreact.azurecr.io/spotifyreactapi:v1
     ports:
       - '5000:5000'

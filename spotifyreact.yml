@@ -1,0 +1,52 @@
+# ---
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: spotifyreactpod
+#   labels:
+#     name: spotifyreactpod
+# spec:
+#   containers:
+#   - name: spotifyreactapi
+#     image: spotifyreact.azurecr.io/spotifyreactapi:v1
+#     ports:
+#     - containerPort: 5000
+#   - name: spotifyreactclient
+#     image: spotifyreact.azurecr.io/spotifyreactclient:v1
+#     ports:
+#     - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: spotifyreact
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spotifyreact
+  template:
+    metadata:
+      labels:
+        app: spotifyreact
+    spec:
+      containers:
+      - name: spotifyreactapi
+        image: hjdachel/spotifyreactapi:latest
+        ports:
+        - containerPort: 5000
+      - name: spotifyreactclient
+        image: hjdachel/spotifyreactclient:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spotifyreactsvc
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: spotifyreact
